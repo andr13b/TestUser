@@ -1,0 +1,76 @@
+@page
+@using System.Collections
+@using TestUser.Models
+@model TestUser.Pages.Users.DetailsModel
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.ID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.ID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.DriverLicense)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.DriverLicense)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.User.Profession)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.User.Profession)
+        </dd>
+        <dt class="col-sm-2">
+            Sessions:
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sessions[0].SessionStart)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sessions[0].SessionEnd)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sessions[0].SessionInfo)
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Sessions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SessionStart)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SessionEnd)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SessionInfo)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.User.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

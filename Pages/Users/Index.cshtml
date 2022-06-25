@@ -1,0 +1,78 @@
+@page
+@model TestUser.Pages.Users.IndexModel
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<div class="form-actions no-color">
+    <form asp-page="./Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Filter: <input type="text" name="filterString" value="@Model.CurrentFilter"/>
+                OnlyDrivers: <input type="checkbox" name="driversOnly" asp-for="@Model.DriversOnly"/>
+                Two or more sessions: <input type="checkbox" name="twoMoreSessions" asp-for="@Model.TwoMoreSessions"/>
+                <input type="submit" value="Search" class="btn btn-default"/> |
+                <a asp-page-handler="Condition">Back to Full List</a>
+            </p>
+        </div>
+    </form>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].DriverLicense)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User[0].Profession)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.User) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DriverLicense)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Profession)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
+                <a asp-page="/Sessions/Create" asp-route-id="@item.ID">Add session</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.User.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.User.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-pageNumber="@(Model.User.PageNumber - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-driversOnly="@Model.DriversOnly"
+   asp-route-twoMoreSessions="@Model.TwoMoreSessions"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-pageNumber="@(Model.User.PageNumber + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   asp-route-driversOnly="@Model.DriversOnly"
+   asp-route-twoMoreSessions="@Model.TwoMoreSessions"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
